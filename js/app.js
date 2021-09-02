@@ -1,3 +1,6 @@
+// get error handle id
+const errorDiv = document.getElementById('error-handle');
+
 // Toggle Area
 const toggleSpinner = displayStyle => {
     document.getElementById('spinner').style.display = displayStyle;
@@ -5,11 +8,11 @@ const toggleSpinner = displayStyle => {
 
 // Search Books
 const searchBooks = () => {   
-    const searchInput = document.getElementById('search-input')
+    const searchInput = document.getElementById('search-input');
     const searchText = searchInput.value;
     // display spinner 
     toggleSpinner('block');
-    searchInput.value = '';   
+    searchInput.value = '';
     // api url
     const url = (`https://openlibrary.org/search.json?q=${searchText}`);
         fetch(url)
@@ -25,6 +28,13 @@ const displaySearchResults = books => {
     // search results
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
+    // error handle
+    if(books.numFound === 0) {
+        errorDiv.innerText = 'No Results Found';
+    }
+    else {
+        errorDiv.innerText = '';
+    }
     // all books array
     const booksArray = books.docs;
     booksArray?.forEach(book => {
